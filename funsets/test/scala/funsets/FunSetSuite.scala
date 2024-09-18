@@ -77,6 +77,8 @@ class FunSetSuite extends FunSuite {
     val s1 = singletonSet(1)
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
+    val unionOfOneAndTwo = union(s1, s2)
+    val unionOfTwoAndThree = union(s2, s3)
   }
 
   /**
@@ -113,8 +115,6 @@ class FunSetSuite extends FunSuite {
       assert(!contains(intersectOfSingleton, 1), "Intersect of singleton sets 1")
       assert(!contains(intersectOfSingleton, 2), "Intersect of singleton sets 2")
 
-      val unionOfOneAndTwo = union(s1, s2)
-      val unionOfTwoAndThree = union(s2, s3)
       val intersectOfUnions = intersect(unionOfOneAndTwo, unionOfTwoAndThree)
       assert(!contains(intersectOfUnions, 1), "Intersect of union sets 1")
       assert(contains(intersectOfUnions, 2), "Intersect of union sets 2")
@@ -123,8 +123,6 @@ class FunSetSuite extends FunSuite {
     }
 
     new TestDiff{
-      val unionOfOneAndTwo = union(s1, s2)
-      val unionOfTwoAndThree = union(s2, s3)
       val diffOfUnions = diff(unionOfOneAndTwo, unionOfTwoAndThree)
       assert(contains(diffOfUnions, 1), "Diff of union sets 1")
       assert(!contains(diffOfUnions, 2), "Diff of union sets 2")
@@ -133,10 +131,26 @@ class FunSetSuite extends FunSuite {
     }
 
     new TestFilter{
-      val unionOfOneAndTwo = union(s1, s2)
       val filterOfUnions = filter(unionOfOneAndTwo, x => x == 1)
       assert(contains(filterOfUnions, 1), "Filter of union sets 1")
       assert(!contains(filterOfUnions, 2), "Filter of union sets 2")
+    }
+
+    new TestForAll{
+      assert(forall(unionOfOneAndTwo, x => x > 0), "Forall of union sets 1")
+      assert(!forall(unionOfOneAndTwo, x => x > 1), "Forall of union sets 2")
+    }
+
+    new TestExists{
+      assert(exists(unionOfOneAndTwo, x => x == 1), "Exists of union sets 1")
+      assert(!exists(unionOfOneAndTwo, x => x == 3), "Exists of union sets 2")
+    }
+
+    new TestMap{
+      val mappedSet = map(unionOfOneAndTwo, x => x * 2)
+      assert(contains(mappedSet, 2), "Map of union sets 1")
+      assert(contains(mappedSet, 4), "Map of union sets 2")
+      assert(!contains(mappedSet, 1), "Map of union sets 3")
     }
   }
 }
