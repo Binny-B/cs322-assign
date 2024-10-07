@@ -12,6 +12,7 @@ class HuffmanSuite extends FunSuite {
   trait TestTrees {
     val t1 = Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5)
     val t2 = Fork(Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5), Leaf('d',4), List('a','b','d'), 9)
+    val t3 = Fork(t2, Leaf('e', 10), List('a','b','d','e'), 19)
   }
 
   test("weight of a larger tree") {
@@ -23,6 +24,13 @@ class HuffmanSuite extends FunSuite {
   test("chars of a larger tree") {
     new TestTrees {
       assert(chars(t2) === List('a','b','d'))
+    }
+  }
+
+  test("weight and chars of larger tree 2"){
+    new TestTrees {
+      assert(weight(t3) === 19)
+      assert(chars(t3) === List('a','b','d','e'))
     }
   }
 
