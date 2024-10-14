@@ -1,9 +1,6 @@
 package forcomp
 
-import org.scalatest.FunSuite
-
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.funsuite.AnyFunsuite
 
 import Anagrams._
 
@@ -18,13 +15,19 @@ class AnagramsSuite extends FunSuite {
     assert(wordOccurrences("Robert") === List(('b', 1), ('e', 1), ('o', 1), ('r', 2), ('t', 1)))
   }
 
+  test("wordOccurrences: Helloworld") {
+    assert(wordOccurrences("Helloworld") === List((d,1), (e,1), (h,1), (l,3), (o,2), (r,1), (w,1)))
+  }
+
 
 
   test("sentenceOccurrences: abcd e") {
     assert(sentenceOccurrences(List("abcd", "e")) === List(('a', 1), ('b', 1), ('c', 1), ('d', 1), ('e', 1)))
   }
 
-
+  test("sentenceOccurrences: Hello world") {
+    assert(sentenceOccurrences(List("Hello", "world")) === List((d,1), (e,1), (h,1), (l,3), (o,2), (r,1), (w,1)))
+  }
 
   test("dictionaryByOccurrences.get: eat") {
     assert(dictionaryByOccurrences.get(List(('a', 1), ('e', 1), ('t', 1))).map(_.toSet) === Some(Set("ate", "eat", "tea")))
@@ -47,6 +50,13 @@ class AnagramsSuite extends FunSuite {
     val r = List(('r', 1))
     val lad = List(('a', 1), ('d', 1), ('l', 1))
     assert(subtract(lard, r) === lad)
+  }
+
+  test("subtract: lard - r") {
+    val helloworld = wordOccurrences("helloworld")
+    val hello = wordOccurrences("hello")
+    val world = wordOccurrences("world")
+    assert(subtract(helloworld, hello) === world)
   }
 
 
