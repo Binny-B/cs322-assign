@@ -165,7 +165,7 @@ object Anagrams {
    *  Note: There is only one anagram of an empty sentence.
    */
   def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
-    val popAnagram(occ: Occurrences): List[Sentence] = {
+    def popAnagram(occ: Occurrences): List[Sentence] = {
         occ match {
           case Nil => List(Nil)
           case _ => {
