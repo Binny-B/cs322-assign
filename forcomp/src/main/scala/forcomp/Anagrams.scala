@@ -164,6 +164,19 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
-
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    val popAnagram(occ: Occurrences): List[Sentence] = {
+        occ match {
+          case Nil => List(Nil)
+          case _ => {
+            for {
+              anagram <- combinations(occ)
+              word <- dictionaryByOccurrences.getOrElse(anagram, Nil)
+              tails <- popAnagram(subtract(occ, anagram))
+            } yield word :: tails
+          }
+        }
+    }
+    popAnagram(sentenceOccurrences(sentence))
+  }
 }
