@@ -75,7 +75,7 @@ trait Solver extends GameDef {
   def from(initial: Stream[(Block, List[Move])],
            explored: Set[Block]): Stream[(Block, List[Move])] = {
     def traversal(queue : Stream[(Block, List[Move])],
-                  expl : Set[Block]): Stream[(Block, List[Move])]) = queue match{
+                  expl : Set[Block]): Stream[(Block, List[Move])] = queue match{
       case Stream.Empty => Stream.empty
       case (b, hist) #:: tail =>
         val newQueue = tail #::: newNeighborsOnly(neighborsWithHistory(b, hist), expl)
